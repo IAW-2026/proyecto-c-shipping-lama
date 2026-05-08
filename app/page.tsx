@@ -39,7 +39,7 @@ export default function Page() {
       </nav>
 
       {/* Hero */}
-      <section className="flex-1 flex flex-col items-center text-center px-6 py-12 relative overflow-hidden bg-[#f6f1e7]">
+      <section className="flex-1 flex flex-col items-center text-center px-6 py-10 relative overflow-hidden bg-[#f6f1e7]">
         {/* Background decoration */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[420px] rounded-full border-2 border-[#6f7f6d]/0" />
