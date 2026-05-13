@@ -1,3 +1,5 @@
+// logica para recibir los webhooks de clerk y crear un usuario logístico en la base de datos
+
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
