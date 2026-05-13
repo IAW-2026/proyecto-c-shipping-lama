@@ -5,10 +5,10 @@ import prisma from '@/lib/prisma'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { orden_id: string } }
+  { params }: { params: Promise<{ orden_id: string }> }
 ) {
   try {
-    const { orden_id } = params
+    const { orden_id } = await params
 
     const envio = await prisma.envio.findFirst({
       where: { orden_id },
