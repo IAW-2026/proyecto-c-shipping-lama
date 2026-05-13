@@ -1,3 +1,5 @@
+//Consultar el envío asociado a una orden. Endpoint: GET /api/envios/orden/{orden_id}
+
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
