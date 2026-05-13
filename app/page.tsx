@@ -31,7 +31,7 @@ export default function Page() {
         
         {/* className="px-5 py-2 border rounded-full border-white/40 text-2sm font-medium text-white/80 hover:bg-[#C3E8CD] hover:text-[#0C3B06] transition-all duration-200" */}
         <Link
-          href="/login"
+          href="/sign-in"
           className = {styles.boton}
         >
           Iniciar sesión
