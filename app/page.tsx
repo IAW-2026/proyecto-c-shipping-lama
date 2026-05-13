@@ -45,31 +45,25 @@ export default function Page() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[420px] rounded-full border-2 border-[#6f7f6d]/0" />
         </div>
 
-        <div className="">
-        <p className="absolute top-[210px] left-[174px] text-xs text-[#37413d]/100">
-          brum brum
-        </p>
+        
         <Image
           src="/truck2.png"
           width={155}
           height={100}
-          className="absolute top-[140px] left-[130px] hover:translate-x-20 transition-transform duration-400"
+          className="absolute top-[160px] left-[130px] hover:translate-x-20 transition-transform duration-400"
           alt=""
         />
-        </div>
+       
 
-        <div className="">
-        <p className="absolute top-[210px] right-[183px] text-xs text-[#37413d]/100">
-          brum brum
-        </p>
+        
         <Image
           src="/truck2.png"
           width={155}
           height={100}
-          className="absolute top-[140px] right-[130px] hover:translate-x-20 transition-transform duration-400  "
+          className="absolute top-[160px] right-[130px] hover:translate-x-20 transition-transform duration-400  "
           alt=""
         />
-        </div>
+      
 
         {/* Tag */}
         <div className="mb-6 font-semibold inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border-5 border-[#ede6d8]/100 bg-[#ede6d8]/100 text-xs text-[#37413d]/100 uppercase tracking-[2.5px] font-light">
