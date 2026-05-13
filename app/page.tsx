@@ -83,7 +83,7 @@ export default function Page() {
 
         {/* CTA */}
         <Link
-          href="/login"
+          href="/sign-in"
           className="group inline-flex items-center gap-1 px-8 py-4 bg-[#ede6d8] text-[#37413d] rounded-full font-medium text-base hover:bg-[#6f7f6d]/50 transition-all duration-200 hover:gap-2"
         >
           Ingresar al panel
