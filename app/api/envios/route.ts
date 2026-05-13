@@ -1,3 +1,5 @@
+//Crear un envío para una orden. Endpoint: POST /api/envios
+
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
