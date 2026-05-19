@@ -1,11 +1,5 @@
 "use client";
 
-//Header principal → #8fa18d
-//Detalles → #6f7f6d
-//Fondo crema → #f6f1e7
-//Cards → #ede6d8
-//Texto oscuro → #37413d
-
 import Link from "next/link";
 import styles from '@/app/ui/home.module.css';
 import Image from "next/image";
@@ -27,12 +21,7 @@ export default function Page() {
           <span className={styles.texto}>a</span>
         </div>
         {isSignedIn ? (
-          <UserButton appearance={{
-  elements: {
-    avatarBox: "w-8 h-8",
-    userButtonAvatarBox: "ring-2 ring-[#6f7f6d]"
-  }
-}} />
+          <UserButton />
         ) : (
           <Link href="/sign-in" className={styles.boton}>
             Iniciar sesión

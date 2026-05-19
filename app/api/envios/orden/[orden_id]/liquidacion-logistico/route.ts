@@ -1,0 +1,53 @@
+// app/api/envios/orden/[orden_id]/liquidacion-logistico/route.ts
+
+import { NextRequest, NextResponse } from 'next/server'
+import prisma from '@/lib/prisma'
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ orden_id: string }> }
+) {
+  const { orden_id } = await params
+  const { fecha_liquidacion_logistico } = await request.json()
+
+  if (!fecha_liquidacion_logistico) {
+    return NextResponse.json(
+      { error: 'Falta la fecha de liquidación' },
+      { status: 400 }
+    )
+  }
+
+  try {
+    const envio = await prisma.envio.findFirst({
+      where: { orden_id }
+    })
+
+    if (!envio) {
+      return NextResponse.json(
+        { error: 'Envío no encontrado para esa orden' },
+        { status: 404 }
+      )
+    }
+
+    await prisma.envio.update({
+      where: { envio_id: envio.envio_id },
+      data: {
+        estado_liquidacion_logistico: 'pagada',
+        fecha_liquidacion_logistico: new Date(fecha_liquidacion_logistico),
+        fecha_actualizacion: new Date(),
+      }
+    })
+
+    return NextResponse.json(
+      { mensaje: 'Liquidación registrada correctamente' },
+      { status: 200 }
+    )
+
+  } catch (error) {
+    console.error('Error al registrar liquidación:', error)
+    return NextResponse.json(
+      { error: 'Error interno del servidor' },
+      { status: 500 }
+    )
+  }
+}

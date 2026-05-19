@@ -20,8 +20,8 @@ export async function POST(request: NextRequest) {
         orden_id,
         vendedor_id,
         direccion_destino,
-        estado_actual: 'pending',
-
+        estado_actual: 'En preparación',
+        estado_liquidacion_logistico: 'pendiente',
       }
     })
 
@@ -38,3 +38,61 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
+/*
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+
+  const search = searchParams.get('search')?.trim() ?? ''
+  const page = Math.max(1, parseInt(searchParams.get('page') ?? '1'))
+  const limit = 10
+  const skip = (page - 1) * limit
+
+  // Construcción dinámica del filtro
+  let where: object = {}
+
+  if (search) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
+      // Buscar por fecha de creación
+      const fecha = new Date(search)
+      const fechaSiguiente = new Date(search)
+      fechaSiguiente.setDate(fechaSiguiente.getDate() + 1)
+      where = { fecha_creacion: { gte: fecha, lt: fechaSiguiente } }
+    } else {
+      // Buscar por dirección, código de seguimiento o envio_id exacto
+      where = {
+        OR: [
+          { direccion_destino: { contains: search, mode: 'insensitive' } },
+          { codigo_seguimiento: { contains: search, mode: 'insensitive' } },
+          { envio_id: { equals: search } },
+        ]
+      }
+    }
+  }
+
+  const [envios, total] = await Promise.all([
+    prisma.envio.findMany({
+      where,
+      orderBy: { fecha_creacion: 'desc' },
+      skip,
+      take: limit,
+      include: {
+        logistico: {
+          select: { nombre: true }
+        }
+      }
+    }),
+    prisma.envio.count({ where })
+  ])
+
+  return NextResponse.json({
+    envios,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    }
+  })
+}
+*/

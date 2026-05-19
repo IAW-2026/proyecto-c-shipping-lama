@@ -1,0 +1,152 @@
+// components/dashboard/EstadoDropdown.tsx
+"use client"
+
+import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
+
+interface EstadoDropdownProps {
+  envio_id: string
+  estado_actual: string
+  es_mi_envio: boolean
+}
+
+const TRANSICIONES: Record<string, { label: string; color: string }[]> = {
+  'en_preparacion': [
+    { label: 'En camino',  color: 'transit'   },
+    { label: 'Cancelado',  color: 'cancelled' },
+  ],
+  'en_camino': [
+    { label: 'Entregado',  color: 'delivered' },
+    { label: 'Cancelado',  color: 'cancelled' },
+  ],
+  'entregado': [],
+  'cancelado': [],
+}
+
+const LABEL_TO_VALUE: Record<string, string> = {
+  'En camino':  'en_camino',
+  'Entregado':  'entregado',
+  'Cancelado':  'cancelado',
+}
+
+const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
+  en_preparacion: { label: 'En preparación', color: 'status-prep'      },
+  en_camino:      { label: 'En camino',       color: 'status-transit'   },
+  entregado:      { label: 'Entregado',       color: 'status-delivered' },
+  cancelado:      { label: 'Cancelado',       color: 'status-cancelled' },
+}
+
+export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoDropdownProps) {
+  const [open, setOpen]       = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError]     = useState<string | null>(null)
+  const router                = useRouter()
+  const ref                   = useRef<HTMLDivElement>(null)
+
+  const status      = STATUS_CONFIG[estado_actual] ?? { label: estado_actual, color: 'status-prep' }
+  const transiciones = TRANSICIONES[estado_actual] ?? []
+  const esFinal     = transiciones.length === 0
+
+  // Cerrar al hacer click fuera
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+        setError(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleCambiarEstado = async (label: string) => {
+    const nuevo_estado = LABEL_TO_VALUE[label]
+    if (!nuevo_estado) return
+
+    setLoading(true)
+    setError(null)
+
+    try {
+      const res = await fetch(`/api/envios/${envio_id}/estado`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nuevo_estado }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error)
+        return
+      }
+
+      setOpen(false)
+      router.refresh()
+
+    } catch {
+      setError('Error al cambiar el estado')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Estado final — solo mostrar el badge sin interacción
+  if (esFinal) {
+    return (
+      <span className={`status-badge ${status.color}`}>
+        <span className="status-dot" />
+        {status.label}
+      </span>
+    )
+  }
+
+  // No es el operador asignado — solo mostrar el badge
+  if (!es_mi_envio) {
+    return (
+      <span className={`status-badge ${status.color}`}>
+        <span className="status-dot" />
+        {status.label}
+      </span>
+    )
+  }
+
+  // Es el operador asignado y el estado no es final — mostrar dropdown
+  return (
+    <div className="estado-wrapper" ref={ref}>
+      <button
+        className={`status-badge ${status.color} estado-trigger`}
+        onClick={() => { setOpen(o => !o); setError(null) }}
+        disabled={loading}
+      >
+        <span className="status-dot" />
+        {status.label}
+        <svg
+          width="10" height="10"
+          viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2.5"
+          className={`estado-chevron ${open ? 'open' : ''}`}
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="estado-menu">
+          <p className="estado-menu-title">Cambiar a</p>
+          {transiciones.map((t) => (
+            <button
+              key={t.label}
+              className={`estado-option estado-option--${t.color}`}
+              onClick={() => handleCambiarEstado(t.label)}
+              disabled={loading}
+            >
+              <span className={`estado-option-dot estado-option-dot--${t.color}`} />
+              {t.label}
+            </button>
+          ))}
+          {error && <p className="estado-error">{error}</p>}
+        </div>
+      )}
+    </div>
+  )
+}

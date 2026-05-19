@@ -34,6 +34,9 @@ model Envio {
   logistico_id           String?
   fecha_creacion         DateTime @default(now())
   fecha_estimada_entrega DateTime?
+  estado_liquidacion_logistico  String?   @default("pendiente")
+  fecha_liquidacion_logistico   DateTime? @default("-")
+  fecha_actualizacion           DateTime? @updatedAt
 
   logistico              UsuarioLogistico? @relation(fields: [logistico_id], references: [logistico_id])
   historial              HistorialEntrega[]
