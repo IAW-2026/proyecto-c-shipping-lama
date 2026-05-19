@@ -1,4 +1,5 @@
 // app/api/envios/[envio_id]/estado/route.ts
+// Api interna para que el operador logístico pueda cambiar el estado del envío. Endpoint: PATCH /api/envios/[envio_id]/estado
 
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'

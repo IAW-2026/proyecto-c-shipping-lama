@@ -1,4 +1,5 @@
 // app/api/envios/[envio_id]/reclamar/route.ts
+// Api interna para que un operador logístico pueda reclamar un envío sin operador asignado. Endpoint: PATCH /api/envios/[envio_id]/reclamar
 
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
