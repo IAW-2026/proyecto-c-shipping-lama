@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #8fa18d;
   --foreground: #171717;
+  /* Variables lama */
+  --green: #8fa18d;
+  --green-dark: #6b7f6a;
+  --green-light: #b3c2b1;
+  --cream: #f0ede4;
+  --cream-dark: #e4e0d6;
+  --text: #2d2d2d;
+  --text-muted: #7a7a7a;
+  --text-light: #a8a8a8;
+  --white: #ffffff;
+  --border: rgba(143, 161, 141, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
 }
 
 @theme inline {
@@ -12,12 +27,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+*/
 
 body {
   background: var(--background);
