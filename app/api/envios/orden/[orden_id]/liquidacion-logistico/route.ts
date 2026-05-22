@@ -38,6 +38,15 @@ export async function PATCH(
       }
     })
 
+    // Registrar el pago en el historial de entregas
+    await prisma.historialEntrega.create({
+      data: {
+        envio_id: envio.envio_id,
+        estado: 'entregado',
+        descripcion: 'Pago registrado',
+      }
+    })
+
     return NextResponse.json(
       { mensaje: 'Liquidación registrada correctamente' },
       { status: 200 }

@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { calcularFechaEstimada } from '@/lib/calcularFechaEntrega'
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,8 +21,19 @@ export async function POST(request: NextRequest) {
         orden_id,
         vendedor_id,
         direccion_destino,
-        estado_actual: 'En preparación',
+        estado_actual: 'en_preparacion',
         estado_liquidacion_logistico: 'pendiente',
+        fecha_estimada_entrega: calcularFechaEstimada(direccion_destino, new Date()),
+      }
+    })
+
+    // Registrar el estado inicial en el historial de entregas
+    await prisma.historialEntrega.create({
+      data: {
+        envio_id: envio.envio_id,
+        estado: 'en_preparacion',
+        descripcion: 'Envío creado',
+        // logistico_id queda null porque aún no hay operador asignado
       }
     })
 
@@ -29,6 +41,7 @@ export async function POST(request: NextRequest) {
       envio_id: envio.envio_id,
       codigo_seguimiento: envio.codigo_seguimiento,
       estado: envio.estado_actual,
+      empresa_logistica: 'lama',
     }, { status: 201 })
 
   } catch (error) {
