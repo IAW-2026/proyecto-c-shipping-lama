@@ -3,6 +3,7 @@
 import { useDashboardParams } from "@/hooks/useDashboardParams";
 import { ReclamarButton } from "@/components/dashboard/ReclamarButton";
 import { EstadoDropdown } from "./EstadoDropdown"
+import Link from "next/link";
 
 export interface Envio {
   envio_id: string;
@@ -17,6 +18,7 @@ export interface Envio {
   logistico: {
     nombre: string;
   } | null;
+  estado_liquidacion_logistico: string | null;
 }
 
 interface ShipmentsTableProps {
@@ -44,7 +46,7 @@ function formatDate(dateStr: Date | null) {
 function SkeletonRow() {
   return (
     <tr className="skeleton-row">
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 7 }).map((_, i) => (
         <td key={i}>
           <div className="skeleton-cell" style={{ width: i === 1 ? "80%" : "60%" }} />
         </td>
@@ -56,7 +58,7 @@ function SkeletonRow() {
 function EmptyState({ hasSearch }: { hasSearch: boolean }) {
   return (
     <tr>
-      <td colSpan={6}>
+      <td colSpan={7}>
         <div className="empty-state">
           <div className="empty-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -89,12 +91,13 @@ export function ShipmentsTable({ envios, isLoading = false , miLogisticoId }: Sh
       <table className="shipments-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Envio ID</th>
             <th>Dirección destino</th>
             <th>Operador</th>
             <th>Estado</th>
             <th>Fecha creación</th>
             <th>Entrega estimada</th>
+            <th>Pago</th>
           </tr>
         </thead>
         <tbody>
@@ -111,7 +114,9 @@ export function ShipmentsTable({ envios, isLoading = false , miLogisticoId }: Sh
               return (
                 <tr key={envio.envio_id} className="data-row">
                   <td>
-                    <span className="envio-id">#{envio.envio_id}</span>
+                    <Link href={`/dashboard/envios/${envio.envio_id}`} className="envio-id envio-id--link" title="Historial de envío">
+                      #{envio.envio_id}
+                    </Link>
                   </td>
                   <td>
                     <div className="address-cell">
@@ -143,6 +148,12 @@ export function ShipmentsTable({ envios, isLoading = false , miLogisticoId }: Sh
                   </td>
                   <td>{formatDate(envio.fecha_creacion)}</td>
                   <td>{formatDate(envio.fecha_estimada_entrega)}</td>
+                  <td>
+                    <span className={`status-badge ${envio.estado_liquidacion_logistico === 'pagada' ? 'status-delivered' : 'status-prep'}`}>
+                      <span className="status-dot" />
+                      {envio.estado_liquidacion_logistico === 'pagada' ? 'Realizado' : 'Pendiente'}
+                    </span>
+                  </td>
                 </tr>
               );
             })

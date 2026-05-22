@@ -1,0 +1,152 @@
+:root {
+  --green: #8fa18d;
+  --green-dark: #6b7f6a;
+  --cream: #f0ede4;
+  --cream-dark: #e4e0d6;
+  --text: #2d2d2d;
+  --text-muted: #7a7a7a;
+  --text-light: #a8a8a8;
+  --white: #ffffff;
+  --border: rgba(143, 161, 141, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 0;
+  background: #8fa18d;
+}
+
+.topBarLogo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: opacity 0.15s;
+}
+
+.topBarLogo:hover {
+  opacity: 0.75;
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0.5rem auto 2rem;
+  padding: 2rem 2rem 4rem;
+  background-color: var(--cream);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 85vh;
+  max-height: 90vh;
+  min-width: 1200px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+  width: fit-content;
+  margin-bottom: -20px;
+}
+
+.backLink:hover {
+  color: var(--green-dark);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.envioMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.envioId {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--green-dark);
+  background: rgba(143, 161, 141, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+/* Info cards */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.infoCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.infoLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.infoValue {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Latest row highlight */
+.latestRow {
+  background: rgba(242, 245, 241, 0.05);
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

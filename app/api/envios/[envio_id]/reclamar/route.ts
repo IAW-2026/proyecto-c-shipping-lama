@@ -62,6 +62,16 @@ export async function PATCH(
       }
     })
 
+    // Registrar el reclamo en el historial de entregas
+    await prisma.historialEntrega.create({
+      data: {
+        envio_id: envio_id,
+        estado: envio.estado_actual,
+        logistico_id: operador.logistico_id,
+        descripcion: `Envío reclamado por ${operador.nombre}`,
+      }
+    })
+
     return NextResponse.json({
       envio_id: envioActualizado.envio_id,
       logistico_id: envioActualizado.logistico_id,

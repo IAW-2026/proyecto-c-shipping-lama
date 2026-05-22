@@ -15,12 +15,28 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  min-width: 1200px;
+  min-height: 75vh;
 }
 
 .topBar {
   display: flex;
   justify-content: center;
-  padding: 0.75rem 0 0;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  position: relative;
+}
+
+.topBarAction {
+  position: absolute;
+  right: 27rem;
+  top: 7.5rem;
+}
+
+.topBarAction2 {
+  position: absolute;
+  right: 12rem;
+  top: 7.5rem;
 }
 
 .topBarLogo {
@@ -191,7 +207,7 @@
  
 :global(.shipments-table th) {
   text-align: left;
-  padding: 0.85rem 1.1rem;
+  padding: 0.75rem 0.75rem;
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--text-muted);
@@ -214,7 +230,7 @@
 }
  
 :global(.shipments-table td) {
-  padding: 1rem 1.1rem;
+  padding: 0.75rem 0.75rem;
   font-size: 0.875rem;
   color: var(--text);
   vertical-align: middle;
@@ -229,6 +245,17 @@
   background: rgba(143, 161, 141, 0.1);
   padding: 0.25rem 0.6rem;
   border-radius: 6px;
+}
+
+:global(.envio-id--link) {
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+}
+
+:global(.envio-id--link:hover) {
+  background: var(--green);
+  color: white;
 }
  
 /* Dirección */
