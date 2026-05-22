@@ -87,8 +87,11 @@ export async function PATCH(
     }
 
     // Notificar a Seller App a traves de su API que el estado del envío ha cambiado
+
+    const url = `${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`
+    console.log('[Shipping] Notificando Seller App:', url)
     try {
-        await fetch(`${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`, {
+        await fetch(url, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
