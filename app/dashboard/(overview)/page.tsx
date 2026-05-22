@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { SearchBar } from "@/components/dashboard/SearchBar";
 import { ShipmentsTable } from "@/components/dashboard/ShipmentsTable";
 import { Pagination } from "@/components/dashboard/Pagination";
+import SimularPedidoModal from "@/components/dashboard/SimularPedidoModal";
+import SimularPagoModal from "@/components/dashboard/SimularPagoModal";
 import styles from "./dashboard.module.css";
 import prisma from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
@@ -81,8 +83,14 @@ export default async function DashboardPage({
     <>
     <div className={styles.topBar}>
       <Link href="/" className={styles.topBarLogo} title="Página principal">
-        lama
+        lama 
       </Link>
+      <div className={styles.topBarAction}>
+        <SimularPedidoModal />
+      </div>
+      <div className={styles.topBarAction2}>
+        <SimularPagoModal />
+      </div>
     </div>
     <main className={styles.main}>
       {/* Header del dashboard */}

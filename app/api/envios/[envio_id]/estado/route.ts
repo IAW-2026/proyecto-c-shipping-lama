@@ -67,6 +67,16 @@ export async function PATCH(
       data: { estado_actual: nuevo_estado }
     })
 
+    // Registrar el cambio de estado en el historial de entregas
+    await prisma.historialEntrega.create({
+      data: {
+        envio_id: envio_id,
+        estado: nuevo_estado,
+        logistico_id: operador.logistico_id,
+        descripcion: `Estado cambiado a ${nuevo_estado}`,
+      }
+    })
+
 
     // Mapear tu estado al estado que espera Seller App
     const ESTADO_MAP: Record<string, string> = {
@@ -78,7 +88,7 @@ export async function PATCH(
 
     // Notificar a Seller App a traves de su API que el estado del envío ha cambiado
     try {
-        await fetch(`${process.env.SELLER_APP_URL}/api/ordenes-ventas/${envio.orden_id}/estado-envio`, {
+        await fetch(`${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -95,7 +105,7 @@ export async function PATCH(
     // Notificar a Payments App si el envío fue entregado
     if (nuevo_estado === 'entregado') {
       try {
-        await fetch(`${process.env.PAYMENTS_APP_URL}/api/pagos/orden/liberar`, {
+        await fetch(`${process.env.PAYMENTS_APP_URL}/pagos/orden/liberar`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
