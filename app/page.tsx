@@ -9,12 +9,14 @@
 import Link from "next/link";
 import styles from '@/app/ui/home.module.css';
 import Image from "next/image";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 
 export default function Page() {
-  const { isSignedIn } = useAuth();
-  const { user } = useUser();
+  const { isSignedIn, sessionClaims } = useAuth();
+
+  const roles = ((sessionClaims as { roles?: string[] } | null)?.roles) ?? [];
+  const panelHref = roles.includes('super_admin') ? '/admin' : '/dashboard';
 
   return (
     <main className="min-h-screen bg-[#8FA18D] text-black flex flex-col">
@@ -28,11 +30,11 @@ export default function Page() {
         </div>
         {isSignedIn ? (
           <UserButton appearance={{
-  elements: {
-    avatarBox: "w-8 h-8",
-    userButtonAvatarBox: "ring-2 ring-[#6f7f6d]"
-  }
-}} />
+            elements: {
+              avatarBox: "w-8 h-8",
+              userButtonAvatarBox: "ring-2 ring-[#6f7f6d]"
+            }
+          }} />
         ) : (
           <Link href="/sign-in" className={styles.boton}>
             Iniciar sesión
@@ -50,7 +52,7 @@ export default function Page() {
           src="/truck2.png"
           width={155}
           height={100}
-          className="absolute top-[160px] left-[130px] hover:translate-x-20 transition-transform duration-400"
+          className="absolute top-[160px] left-[130px] hover:translate-x-20 transition-transform duration-400 hidden md:block"
           alt=""
         />
 
@@ -58,7 +60,7 @@ export default function Page() {
           src="/truck2.png"
           width={155}
           height={100}
-          className="absolute top-[160px] right-[130px] hover:translate-x-20 transition-transform duration-400"
+          className="absolute top-[160px] right-[130px] hover:translate-x-20 transition-transform duration-400 hidden md:block"
           alt=""
         />
 
@@ -80,7 +82,7 @@ export default function Page() {
 
         {/* CTA */}
         <Link
-          href="/dashboard"
+          href={panelHref}
           className="group inline-flex items-center gap-1 px-8 py-4 bg-[#ede6d8] text-[#37413d] rounded-full font-medium text-base hover:bg-[#6f7f6d]/50 transition-all duration-200 hover:gap-2"
         >
           Ingresar al panel
@@ -164,4 +166,3 @@ export default function Page() {
     </main>
   );
 }
-
