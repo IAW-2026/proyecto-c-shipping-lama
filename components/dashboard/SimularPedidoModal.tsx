@@ -1,3 +1,5 @@
+// Simulo una llamada de Seller App a mi API para crear un nuevo envío. Esto me permite probar la integración sin necesidad de usar la interfaz de Seller App ni crear órdenes reales.
+
 "use client";
 
 import { useState } from "react";
