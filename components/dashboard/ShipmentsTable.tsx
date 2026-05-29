@@ -1,7 +1,6 @@
 "use client";
 
 import { useDashboardParams } from "@/hooks/useDashboardParams";
-import { ReclamarButton } from "@/components/dashboard/ReclamarButton";
 import { EstadoDropdown } from "./EstadoDropdown"
 import Link from "next/link";
 
@@ -129,14 +128,14 @@ export function ShipmentsTable({ envios, isLoading = false , miLogisticoId }: Sh
                   </td>
                   <td>
                     {envio.logistico ? (
-                        <div className="operator-cell">
-                            <div className="operator-avatar">
-                                {envio.logistico.nombre[0].toUpperCase()}
-                            </div>
-                            <span>{envio.logistico.nombre}</span>
+                      <div className="operator-cell">
+                        <div className="operator-avatar">
+                          {envio.logistico.nombre[0].toUpperCase()}
                         </div>
+                        <span>{envio.logistico.nombre}</span>
+                      </div>
                     ) : (
-                        <ReclamarButton envio_id={envio.envio_id} />
+                      <span style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>—</span>
                     )}
                   </td>
                   <td>

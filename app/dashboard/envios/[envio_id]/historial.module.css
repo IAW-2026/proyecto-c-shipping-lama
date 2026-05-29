@@ -44,8 +44,7 @@
   flex-direction: column;
   gap: 1.5rem;
   min-height: 85vh;
-  max-height: 90vh;
-  min-width: 1200px;
+  min-width: 950px;
 }
 
 .backLink {
@@ -136,14 +135,148 @@
   font-weight: 500;
 }
 
-/* Latest row highlight */
+/* Tabla */
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 0.875rem 1rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: rgba(143, 161, 141, 0.04);
+}
+
 .latestRow {
-  background: rgba(242, 245, 241, 0.05);
+  background: rgba(143, 161, 141, 0.06);
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusPrep {
+  background: rgba(251, 191, 36, 0.12);
+  color: #b45309;
+}
+.statusPrep .statusDot { background: #f59e0b; }
+
+.statusTransit {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+.statusTransit .statusDot { background: #3b82f6; }
+
+.statusDelivered {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+}
+.statusDelivered .statusDot { background: #22c55e; }
+
+.statusCancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+.statusCancelled .statusDot { background: #ef4444; }
+
+/* Operador cell */
+.operatorCell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.operatorAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emptyCell {
+  color: var(--text-light);
+}
+
+/* Empty state */
+.emptyState {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0 0 0.25rem;
+}
+
+.emptySubtitle {
+  font-size: 0.83rem;
+  color: var(--text-light);
+  margin: 0;
 }
 
 @media (max-width: 768px) {
   .main {
     padding: 1.5rem 1rem 3rem;
+    min-width: unset;
+    min-height: unset;
   }
 
   .infoGrid {
