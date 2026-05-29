@@ -8,7 +8,7 @@ const isPublicRoute = createRouteMatcher([
   '/sso-callback',
   '/api/webhooks/clerk',
   '/api/mock/(.*)',
-  '/api/envios/(.*)',
+  '/api/envios(.*)',
 ])
 
 const isDashboardRoute = createRouteMatcher(['/dashboard(.*)'])
