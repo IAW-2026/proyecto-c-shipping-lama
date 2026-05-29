@@ -1,0 +1,34 @@
+.toast {
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.toastExiting {
+  animation: toastOut 0.25s ease both;
+  pointer-events: none;
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+    max-height: 300px;
+    margin-bottom: 0;
+  }
+  to {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: -0.5rem;
+  }
+}

@@ -3,6 +3,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { showToast } from "@/lib/toast"
 
 interface EstadoDropdownProps {
   envio_id: string
@@ -81,6 +82,21 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
       }
 
       setOpen(false)
+
+      // Mostrar toast de Seller App
+      if (data.notificaciones?.seller) {
+        const s = data.notificaciones.seller
+        showToast({ app: 'seller', method: s.method, url: s.url, status: s.status, ok: s.ok, body: s.body, error: s.error })
+      }
+
+      // Mostrar toast de Payments App con leve delay para que se vean apilados
+      if (data.notificaciones?.payments) {
+        const p = data.notificaciones.payments
+        setTimeout(() => {
+          showToast({ app: 'payments', method: p.method, url: p.url, status: p.status, ok: p.ok, body: p.body, error: p.error })
+        }, 350)
+      }
+
       router.refresh()
 
     } catch {

@@ -86,29 +86,36 @@ export async function PATCH(
         'cancelado':      'cancelado',
     }
 
-    // Notificar a Seller App a traves de su API que el estado del envío ha cambiado
+    // Notificar a Seller App
+    const sellerUrl = `${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`
+    console.log('[Shipping] Notificando Seller App:', sellerUrl)
 
-    const url = `${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`
-    console.log('[Shipping] Notificando Seller App:', url)
+    type NotifResult = { url: string; method: string; status: number | null; ok: boolean; body: unknown; error?: string }
+
+    let sellerNotif: NotifResult
     try {
-        await fetch(url, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                estado_envio: ESTADO_MAP[nuevo_estado],
-                envio_id: envio.envio_id,
-                codigo_seguimiento: envio.codigo_seguimiento,
-            })
+      const sellerRes = await fetch(sellerUrl, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          estado_envio: ESTADO_MAP[nuevo_estado],
+          envio_id: envio.envio_id,
+          codigo_seguimiento: envio.codigo_seguimiento,
         })
-    } catch (error) {
-    // No fallamos si Seller App no responde, solo logueamos
-    console.error('Error al notificar a Seller App:', error)
+      })
+      const sellerBody = await sellerRes.json().catch(() => null)
+      sellerNotif = { url: sellerUrl, method: 'PATCH', status: sellerRes.status, ok: sellerRes.ok, body: sellerBody }
+    } catch (err) {
+      console.error('Error al notificar a Seller App:', err)
+      sellerNotif = { url: sellerUrl, method: 'PATCH', status: null, ok: false, body: null, error: err instanceof Error ? err.message : 'Error de conexión' }
     }
 
     // Notificar a Payments App si el envío fue entregado
+    let paymentsNotif: NotifResult | null = null
     if (nuevo_estado === 'entregado') {
+      const paymentsUrl = `${process.env.PAYMENTS_APP_URL}/pagos/orden/liberar`
       try {
-        await fetch(`${process.env.PAYMENTS_APP_URL}/pagos/orden/liberar`, {
+        const paymentsRes = await fetch(paymentsUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -116,14 +123,21 @@ export async function PATCH(
             envio_id: envio.envio_id,
           })
         })
-      } catch (error) {
-        console.error('Error al notificar a Payments App:', error)
+        const paymentsBody = await paymentsRes.json().catch(() => null)
+        paymentsNotif = { url: paymentsUrl, method: 'POST', status: paymentsRes.status, ok: paymentsRes.ok, body: paymentsBody }
+      } catch (err) {
+        console.error('Error al notificar a Payments App:', err)
+        paymentsNotif = { url: paymentsUrl, method: 'POST', status: null, ok: false, body: null, error: err instanceof Error ? err.message : 'Error de conexión' }
       }
     }
 
     return NextResponse.json({
       envio_id: envioActualizado.envio_id,
-      estado_actual: envioActualizado.estado_actual
+      estado_actual: envioActualizado.estado_actual,
+      notificaciones: {
+        seller: sellerNotif,
+        payments: paymentsNotif,
+      }
     })
 
   } catch (error) {
