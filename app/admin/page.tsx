@@ -98,7 +98,7 @@ export default async function AdminPage({
   ])
 
   return (
-    <>
+    <div style={{ minHeight: '100vh', background: 'var(--admin-bg2)' }}>
       <nav className={styles.topBar}>
         <Link href="/" className={styles.topBarLogoLink} title="Página principal">
           <span className={styles.topBarLetter}>L</span>
@@ -127,7 +127,7 @@ export default async function AdminPage({
           <div className={styles.headerLeft}>
             <h1 className={styles.title}>Panel de Administración</h1>
             <p className={styles.subtitle}>
-              Todos los envíos del sistema — asigná operadores a los pendientes
+              Todos los envíos del sistema — asigna operadores a los pendientes
             </p>
           </div>
           <div className={styles.headerStats}>
@@ -187,7 +187,7 @@ export default async function AdminPage({
                     <tr key={envio.envio_id} className={styles.row}>
                       <td>
                         <Link
-                          href={`/dashboard/envios/${envio.envio_id}`}
+                          href={`/admin/envios/${envio.envio_id}`}
                           className={styles.envioId}
                           title="Ver historial"
                         >
@@ -249,6 +249,6 @@ export default async function AdminPage({
         </Suspense>
       </main>
       <Toaster />
-    </>
+    </div>
   )
 }

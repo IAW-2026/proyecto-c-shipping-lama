@@ -44,13 +44,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
-  .topBarLetter:hover {
-    transition: all 450ms ease-in-out;
-    color: #9a87e4;
-    opacity: 0.85;
-  }
-}
+
 
 .topBarRight {
   display: flex;
@@ -99,8 +93,8 @@
 .main {
   background-color: var(--admin-bg);
   min-height: calc(100vh - 58px);
-  max-width: 1800px;
-  margin: 2rem auto 2rem;
+  max-width: 1300px;
+  margin: 4rem auto;
   padding: 2.5rem 2rem 4rem;
   display: flex;
   flex-direction: column;
@@ -365,9 +359,7 @@
   .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
 
-:global(body) {
-  background: var(--admin-bg2);
-}
+
 
 :global(.page-btn.active) {
   background: var(--admin-accent);

@@ -1,5 +1,6 @@
 // app/api/mock/seller/ordenes-ventas/[orden_id]/estado-envio/route.ts
-// Simula la respuesta de Seller App al recibir un cambio de estado de envío
+// Simula la api que expone seller app y yo llamo 
+// Utilizo la respuesta de Seller App al recibir un cambio de estado de envío en 
 // Contrato: PATCH /api/ordenes-ventas/{orden_id}/estado-envio
 
 import { NextRequest, NextResponse } from 'next/server'

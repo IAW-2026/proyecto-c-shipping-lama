@@ -3,6 +3,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Estado = "idle" | "loading" | "success" | "error";
 
@@ -12,6 +13,7 @@ interface ResultadoRequest {
 }
 
 export default function SimularPedidoModal() {
+  const router = useRouter();
   const [abierto, setAbierto] = useState(false);
   const [ordenId, setOrdenId] = useState("");
   const [direccionDestino, setDireccionDestino] = useState("");
@@ -54,7 +56,7 @@ export default function SimularPedidoModal() {
     };
 
     try {
-      const res = await fetch("https://proyecto-c-shipping-lama.vercel.app/api/envios", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SHIPPING_APP_URL}/api/envios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -63,6 +65,7 @@ export default function SimularPedidoModal() {
       const data = await res.json();
       setResultado({ status: res.status, data });
       setEstado(res.ok ? "success" : "error");
+      if (res.ok) router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error de red desconocido");
       setEstado("error");

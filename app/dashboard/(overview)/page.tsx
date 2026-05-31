@@ -82,7 +82,7 @@ export default async function DashboardPage({
     <>
       <nav className={styles.topBar}>
         <Link href="/" className={styles.topBarLogoLink} title="Página principal">
-          <span className={styles.topBarLetter}>l</span>
+          <span className={styles.topBarLetter}>L</span>
           <span className={styles.topBarLetter}>a</span>
           <span className={styles.topBarLetter}>m</span>
           <span className={styles.topBarLetter}>a</span>

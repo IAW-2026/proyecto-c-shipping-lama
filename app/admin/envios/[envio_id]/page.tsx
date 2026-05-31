@@ -16,15 +16,12 @@ const STATUS_CONFIG: Record<string, { label: string; badgeClass: string }> = {
 
 function formatDate(date: Date) {
   return new Date(date).toLocaleDateString('es-AR', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    day: '2-digit', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
   })
 }
 
-export default async function HistorialPage({ params }: PageProps) {
+export default async function AdminHistorialPage({ params }: PageProps) {
   const { envio_id } = await params
 
   const envio = await prisma.envio.findUnique({
@@ -33,9 +30,7 @@ export default async function HistorialPage({ params }: PageProps) {
       logistico: { select: { nombre: true } },
       historial: {
         orderBy: { fecha: 'desc' },
-        include: {
-          logistico: { select: { nombre: true } }
-        }
+        include: { logistico: { select: { nombre: true } } }
       }
     }
   })
@@ -48,19 +43,19 @@ export default async function HistorialPage({ params }: PageProps) {
   }
 
   return (
-    <>
+    <div style={{ minHeight: '100vh', background: 'var(--admin-bg2)' }}>
       {/*
       <div className={styles.topBar}>
-        <Link href="/" className={styles.topBarLogo}>lama</Link>
+        <Link href="/admin" className={styles.topBarLogo}>lama</Link>
       </div>
       */}
 
       <main className={styles.main}>
-        <Link href="/dashboard" className={styles.backLink}>
+        <Link href="/admin" className={styles.backLink}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="m15 18-6-6 6-6" />
           </svg>
-          Volver a mis envíos
+          Volver al panel de administración
         </Link>
 
         <div className={styles.header}>
@@ -113,9 +108,7 @@ export default async function HistorialPage({ params }: PageProps) {
                   <td colSpan={4}>
                     <div className={styles.emptyState}>
                       <p className={styles.emptyTitle}>Sin historial aún</p>
-                      <p className={styles.emptySubtitle}>
-                        Los eventos aparecerán aquí cuando el envío sea actualizado
-                      </p>
+                      <p className={styles.emptySubtitle}>Los eventos aparecerán aquí cuando el envío sea actualizado</p>
                     </div>
                   </td>
                 </tr>
@@ -126,10 +119,7 @@ export default async function HistorialPage({ params }: PageProps) {
                     badgeClass: styles.statusPrep,
                   }
                   return (
-                    <tr
-                      key={evento.evento_id}
-                      className={index === 0 ? styles.latestRow : undefined}
-                    >
+                    <tr key={evento.evento_id} className={index === 0 ? styles.latestRow : undefined}>
                       <td>{formatDate(evento.fecha)}</td>
                       <td>
                         <span className={`${styles.statusBadge} ${eventoStatus.badgeClass}`}>
@@ -158,6 +148,6 @@ export default async function HistorialPage({ params }: PageProps) {
           </table>
         </div>
       </main>
-    </>
+    </div>
   )
 }
