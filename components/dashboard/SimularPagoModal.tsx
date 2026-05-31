@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Estado = "idle" | "loading" | "success" | "error";
 
@@ -10,6 +11,7 @@ interface ResultadoRequest {
 }
 
 export default function SimularPagoModal() {
+  const router = useRouter();
   const [abierto, setAbierto] = useState(false);
   const [ordenId, setOrdenId] = useState("");
   const [estado, setEstado] = useState<Estado>("idle");
@@ -41,7 +43,23 @@ export default function SimularPagoModal() {
     setError(null);
     setResultado(null);
     try {
-      const res = await fetch(`/api/envios/orden/${ordenId.trim()}/liquidacion-logistico`, {
+      // Verificar que el envío existe y está entregado
+      const checkRes = await fetch(`${process.env.NEXT_PUBLIC_SHIPPING_APP_URL}/api/envios/orden/${ordenId.trim()}`);
+      if (!checkRes.ok) {
+        const checkData = await checkRes.json();
+        setError(checkData.error ?? "No se encontró el envío.");
+        setEstado("idle");
+        return;
+      }
+      const checkData = await checkRes.json();
+      if (checkData.estado !== "entregado") {
+        setError(`El envío debe estar en estado 'entregado' para registrar el pago. Estado actual: '${checkData.estado}'.`);
+        setEstado("idle");
+        return;
+      }
+
+      // Proceder con el pago
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SHIPPING_APP_URL}/api/envios/orden/${ordenId.trim()}/liquidacion-logistico`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -51,6 +69,7 @@ export default function SimularPagoModal() {
       const data = await res.json();
       setResultado({ status: res.status, data });
       setEstado(res.ok ? "success" : "error");
+      if (res.ok) router.refresh();
     } catch {
       setError("Error al simular el pago. Intentá nuevamente.");
       setEstado("error");

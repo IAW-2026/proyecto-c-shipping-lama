@@ -86,7 +86,7 @@ export async function PATCH(
         'cancelado':      'cancelado',
     }
 
-    // Notificar a Seller App
+    // Notificar a Seller App y muestro toast notification con el response
     const sellerUrl = `${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`
     console.log('[Shipping] Notificando Seller App:', sellerUrl)
 
@@ -110,7 +110,7 @@ export async function PATCH(
       sellerNotif = { url: sellerUrl, method: 'PATCH', status: null, ok: false, body: null, error: err instanceof Error ? err.message : 'Error de conexión' }
     }
 
-    // Notificar a Payments App si el envío fue entregado
+    // Notificar a Payments App si el envío fue entregado y muestro toast notification con el response
     let paymentsNotif: NotifResult | null = null
     if (nuevo_estado === 'entregado') {
       const paymentsUrl = `${process.env.PAYMENTS_APP_URL}/pagos/orden/liberar`

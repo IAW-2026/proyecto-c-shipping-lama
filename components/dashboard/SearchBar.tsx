@@ -51,6 +51,7 @@ export function SearchBar() {
           value={localValue}
           onChange={handleChange}
           className="search-input"
+          aria-label="Buscar envíos por ID, fecha o dirección"
         />
         {localValue && (
           <button onClick={handleClear} className="clear-btn" aria-label="Limpiar búsqueda">

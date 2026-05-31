@@ -128,11 +128,14 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
 
   // Es el operador asignado y el estado no es final — mostrar dropdown
   return (
-    <div className="estado-wrapper" ref={ref}>
+    <div className="estado-wrapper" ref={ref} style={open ? { zIndex: 200 } : undefined}>
       <button
         className={`status-badge ${status.color} estado-trigger`}
         onClick={() => { setOpen(o => !o); setError(null) }}
         disabled={loading}
+        aria-label="Cambiar estado del envío"
+        aria-expanded={open}
+        aria-haspopup="menu"
       >
         <span className="status-dot" />
         {status.label}
@@ -141,13 +144,14 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
           viewBox="0 0 24 24" fill="none"
           stroke="currentColor" strokeWidth="2.5"
           className={`estado-chevron ${open ? 'open' : ''}`}
+          aria-hidden="true"
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
 
       {open && (
-        <div className="estado-menu">
+        <div className="estado-menu" role="menu">
           <p className="estado-menu-title">Cambiar a</p>
           {transiciones.map((t) => (
             <button
@@ -155,12 +159,13 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
               className={`estado-option estado-option--${t.color}`}
               onClick={() => handleCambiarEstado(t.label)}
               disabled={loading}
+              role="menuitem"
             >
-              <span className={`estado-option-dot estado-option-dot--${t.color}`} />
+              <span className={`estado-option-dot estado-option-dot--${t.color}`} aria-hidden="true" />
               {t.label}
             </button>
           ))}
-          {error && <p className="estado-error">{error}</p>}
+          {error && <p className="estado-error" role="alert">{error}</p>}
         </div>
       )}
     </div>

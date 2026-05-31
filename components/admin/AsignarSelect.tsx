@@ -1,3 +1,7 @@
+// Funcion llamada por admin page para asignar un operador logístico a un envío específico. Solo 
+// los usuarios con rol "super_admin" pueden realizar esta acción. El componente muestra un select 
+// con los operadores disponibles y maneja el proceso de asignación, mostrando errores si ocurren.
+
 "use client"
 
 import { useState } from "react"
@@ -67,6 +71,7 @@ export function AsignarSelect({ envio_id, logisticos }: AsignarSelectProps) {
         onChange={handleChange}
         disabled={loading}
         className="text-xs border border-[#7c3aed]/30 rounded-lg px-2.5 py-1.5 bg-white text-[#1e1b4b] focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/30 disabled:opacity-50 cursor-pointer min-w-[160px]"
+        aria-label="Asignar operador logístico"
       >
         <option value="" disabled>
           {loading ? 'Asignando...' : 'Asignar operador...'}

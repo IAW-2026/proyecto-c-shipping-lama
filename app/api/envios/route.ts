@@ -1,4 +1,5 @@
 //Crear un envío para una orden. Endpoint: POST /api/envios
+//Api que expone mi app y va a ser llamada por seller app
 
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
