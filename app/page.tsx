@@ -23,7 +23,7 @@ export default function Page() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-3 border-b-2 border-black/10 text-white bg-[#8FA08D]">
         <div className="flex -mb-2">
-          <span className={styles.texto}>l</span>
+          <span className={styles.texto}>L</span>
           <span className={styles.texto}>a</span>
           <span className={styles.texto}>m</span>
           <span className={styles.texto}>a</span>
