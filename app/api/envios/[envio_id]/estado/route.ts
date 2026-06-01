@@ -87,7 +87,7 @@ export async function PATCH(
     }
 
     // Notificar a Seller App y muestro toast notification con el response
-    const sellerUrl = `${process.env.SELLER_APP_URL}/ordenes-ventas/${envio.orden_id}/estado-envio`
+    const sellerUrl = `${process.env.SELLER_APP_URL}/api/ordenes-ventas/${envio.orden_id}/estado-envio`
     console.log('[Shipping] Notificando Seller App:', sellerUrl)
 
     type NotifResult = { url: string; method: string; status: number | null; ok: boolean; body: unknown; error?: string }
@@ -113,7 +113,7 @@ export async function PATCH(
     // Notificar a Payments App si el envío fue entregado y muestro toast notification con el response
     let paymentsNotif: NotifResult | null = null
     if (nuevo_estado === 'entregado') {
-      const paymentsUrl = `${process.env.PAYMENTS_APP_URL}/pagos/orden/liberar`
+      const paymentsUrl = `${process.env.PAYMENTS_APP_URL}/api/pagos/orden/liberar`
       try {
         const paymentsRes = await fetch(paymentsUrl, {
           method: 'POST',

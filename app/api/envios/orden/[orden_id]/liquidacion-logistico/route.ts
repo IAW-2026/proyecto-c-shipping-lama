@@ -8,9 +8,10 @@ export async function PATCH(
   { params }: { params: Promise<{ orden_id: string }> }
 ) {
   const { orden_id } = await params
-  const { fecha_liquidacion_logistico } = await request.json()
+  const body = await request.json()
+  const fecha = body['fecha_actualización'] ?? body['fecha_actualizacion']
 
-  if (!fecha_liquidacion_logistico) {
+  if (!fecha) {
     return NextResponse.json(
       { error: 'Falta la fecha de liquidación' },
       { status: 400 }
@@ -33,7 +34,7 @@ export async function PATCH(
       where: { envio_id: envio.envio_id },
       data: {
         estado_liquidacion_logistico: 'pagada',
-        fecha_liquidacion_logistico: new Date(fecha_liquidacion_logistico),
+        fecha_liquidacion_logistico: new Date(fecha),
         fecha_actualizacion: new Date(),
       }
     })
