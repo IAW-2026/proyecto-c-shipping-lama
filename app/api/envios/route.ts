@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 
   const search = searchParams.get('search')?.trim() ?? ''
   const page = Math.max(1, parseInt(searchParams.get('page') ?? '1'))
-  const limit = 10
+  const limit = 5
   const skip = (page - 1) * limit
 
   // Construcción dinámica del filtro
