@@ -63,7 +63,7 @@ export default function SimularPagoModal() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fecha_liquidacion_logistico: new Date().toISOString(),
+          fecha_actualización: new Date().toISOString(),
         }),
       });
       const data = await res.json();
