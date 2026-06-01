@@ -9,6 +9,38 @@ Esta app corresponde al módulo de envíos y logística en el proyecto de tipo *
 
 Enunciado completo: <https://iaw-2026.github.io/proyecto/>
 
+---
+## Descripción de la app
+
+Shipping app creada con las siguientes tecnologías: 
+- Next.js
+- PostgreSQL
+- Clerk
+- Tailwind CSS
+- Prisma
+- Vercel + Neon
+
+
+La app cuenta con dos tipos de usuarios que pueden operar: Usuario logistico (rol: logistics) y usuario administrador (rol: super_admin)
+
+Ahora mismo cuenta con varios usuarios logisticos los cuales visualizarán un dashboard que tiene solo los pedidos que les fueron asignados. Van a poder ir actualizando los estados de cada uno de estos según el flujo de entrega.
+
+Cuenta con un único usuario administrador. Este verá un dashboard especial, completo con todos los envios del sistema y sus correspondientes logisticos asignados. El administrador podra desde este panel asignar envios a los distintos usuarios logisticos.
+
+Ambos dashboards cuentan con la opcion de clickear los id de los envios, esto permitirá ver el historial de estados de cada envío.
+
+Credenciales inicio de sesión de usuario administrador:
+- mail: maxibloga7@gmail.com
+- contraseña: m3LeKSbC27JP9Jb
+
+Credenciales inicio de sesión de un usuario logistico:
+- mail: maxibdn6@gmail.com
+- contraseña: qspjFrBKACYEy45
+
+
+---
+
+
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
