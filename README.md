@@ -25,17 +25,17 @@ La app cuenta con dos tipos de usuarios que pueden operar: Usuario logistico (ro
 
 Ahora mismo cuenta con varios usuarios logisticos los cuales visualizarán un dashboard que tiene solo los pedidos que les fueron asignados. Van a poder ir actualizando los estados de cada uno de estos según el flujo de entrega.
 
-Cuenta con un único usuario administrador. Este verá un dashboard especial, completo con todos los envios del sistema y sus correspondientes logisticos asignados. El administrador podra desde este panel asignar envios a los distintos usuarios logisticos.
+Cuenta con un único usuario administrador. Este verá un dashboard especial, completo con todos los envios del sistema y sus correspondientes logisticos asignados. El administrador podra desde este panel asignar envios a los distintos usuarios logisticos. Este dashboard tambien cuenta con dos botones para hacer simulaciones, imitando llamadas de otras apps a mis apis.
 
 Ambos dashboards cuentan con la opcion de clickear los id de los envios, esto permitirá ver el historial de estados de cada envío.
 
 Credenciales inicio de sesión de usuario administrador:
-- mail: maxibloga7@gmail.com
-- contraseña: m3LeKSbC27JP9Jb
+- mail: super_admin+clerktest@iaw.com
+- contraseña: iawuser#
 
 Credenciales inicio de sesión de un usuario logistico:
-- mail: maxibdn6@gmail.com
-- contraseña: qspjFrBKACYEy45
+- mail: shipping+clerktest@iaw.com
+- contraseña: iawuser#
 
 
 ---

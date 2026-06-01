@@ -41,8 +41,10 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
   const [open, setOpen]       = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState<string | null>(null)
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null)
   const router                = useRouter()
   const ref                   = useRef<HTMLDivElement>(null)
+  const btnRef                = useRef<HTMLButtonElement>(null)
 
   const status      = STATUS_CONFIG[estado_actual] ?? { label: estado_actual, color: 'status-prep' }
   const transiciones = TRANSICIONES[estado_actual] ?? []
@@ -126,12 +128,22 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
     )
   }
 
+  const handleToggle = () => {
+    if (!open && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect()
+      setMenuPos({ top: rect.bottom + 6, left: rect.left })
+    }
+    setOpen(o => !o)
+    setError(null)
+  }
+
   // Es el operador asignado y el estado no es final — mostrar dropdown
   return (
-    <div className="estado-wrapper" ref={ref} style={open ? { zIndex: 200 } : undefined}>
+    <div className="estado-wrapper" ref={ref}>
       <button
+        ref={btnRef}
         className={`status-badge ${status.color} estado-trigger`}
-        onClick={() => { setOpen(o => !o); setError(null) }}
+        onClick={handleToggle}
         disabled={loading}
         aria-label="Cambiar estado del envío"
         aria-expanded={open}
@@ -150,8 +162,12 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
         </svg>
       </button>
 
-      {open && (
-        <div className="estado-menu" role="menu">
+      {open && menuPos && (
+        <div
+          className="estado-menu"
+          role="menu"
+          style={{ position: 'fixed', top: menuPos.top, left: menuPos.left, zIndex: 9999 }}
+        >
           <p className="estado-menu-title">Cambiar a</p>
           {transiciones.map((t) => (
             <button
