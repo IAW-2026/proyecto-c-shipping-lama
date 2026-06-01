@@ -9,7 +9,7 @@ import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
 async function getEnvios(search: string, page: number, logisticoId: string) {
-  const limit = 10
+  const limit = 3
   const skip = (page - 1) * limit
 
   const baseWhere = { logistico_id: logisticoId }

@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { useRouter } from "next/navigation"
 import { showToast } from "@/lib/toast"
 
@@ -45,15 +46,19 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
   const router                = useRouter()
   const ref                   = useRef<HTMLDivElement>(null)
   const btnRef                = useRef<HTMLButtonElement>(null)
+  const menuRef               = useRef<HTMLDivElement>(null)
 
   const status      = STATUS_CONFIG[estado_actual] ?? { label: estado_actual, color: 'status-prep' }
   const transiciones = TRANSICIONES[estado_actual] ?? []
   const esFinal     = transiciones.length === 0
 
-  // Cerrar al hacer click fuera
+  // Cerrar al hacer click fuera (considera ambos: wrapper y menú portal)
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+      const target = e.target as Node
+      const insideWrapper = ref.current?.contains(target)
+      const insideMenu = menuRef.current?.contains(target)
+      if (!insideWrapper && !insideMenu) {
         setOpen(false)
         setError(null)
       }
@@ -162,8 +167,9 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
         </svg>
       </button>
 
-      {open && menuPos && (
+      {open && menuPos && createPortal(
         <div
+          ref={menuRef}
           className="estado-menu"
           role="menu"
           style={{ position: 'fixed', top: menuPos.top, left: menuPos.left, zIndex: 9999 }}
@@ -182,7 +188,8 @@ export function EstadoDropdown({ envio_id, estado_actual, es_mi_envio }: EstadoD
             </button>
           ))}
           {error && <p className="estado-error" role="alert">{error}</p>}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

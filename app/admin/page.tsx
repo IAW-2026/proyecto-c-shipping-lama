@@ -26,7 +26,7 @@ function formatDate(date: Date | null) {
 }
 
 async function getAdminEnvios(search: string, page: number) {
-  const limit = 10
+  const limit = 4
   const skip = (page - 1) * limit
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
