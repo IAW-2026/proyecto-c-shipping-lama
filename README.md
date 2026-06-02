@@ -1,7 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/mVV06Hfm)
 # shipping
 
-Aplicación **Shipping** del [Proyecto IAW 2026](https://iaw-2026.github.io/proyecto/) — comisión `<!-- completar -->`.
+Aplicación **Shipping** del [Proyecto IAW 2026](https://iaw-2026.github.io/proyecto/) — comisión `LAMA`.
 
 Esta app corresponde al módulo de envíos y logística en el proyecto de tipo **C (Marketplace)**.
 
@@ -30,13 +30,16 @@ Cuenta con un único usuario administrador. Este verá un dashboard especial, co
 Ambos dashboards cuentan con la opcion de clickear los id de los envios, esto permitirá ver el historial de estados de cada envío.
 
 Credenciales inicio de sesión de usuario administrador:
-- mail: super_admin+clerktest@iaw.com
+- mail: super_admin+clerk_test@iaw.com
 - contraseña: iawuser#
 
 Credenciales inicio de sesión de un usuario logistico:
-- mail: shipping+clerktest@iaw.com
+- mail: shipping+clerk_test@iaw.com
 - contraseña: iawuser#
 
+## Deploy de producción
+
+https://proyecto-c-shipping-lama.vercel.app/
 
 ---
 
