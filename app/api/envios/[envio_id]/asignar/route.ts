@@ -1,5 +1,9 @@
 // PATCH /api/envios/[envio_id]/asignar
 // Solo super_admin: asigna un operador logístico a un envío sin operador.
+// Api interna para que el admin pueda asignar un envío a un operador logístico específico, recibiendo 
+// el clerk_user_id del operador a asignar. El endpoint verifica que el envío exista y no tenga ya un 
+// operador asignado, luego busca al operador por su clerk_user_id y actualiza el envío con el 
+// logistico_id correspondiente. También registra esta acción en el historial de entregas.
 
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'

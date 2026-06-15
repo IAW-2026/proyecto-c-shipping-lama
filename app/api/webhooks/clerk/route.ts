@@ -1,4 +1,6 @@
 // logica para recibir los webhooks de clerk y crear un usuario logístico en la base de datos
+// clerk llama desde sus servidores a este endpoint cada vez que se crea un nuevo usuario, y con la info 
+// del usuario crea un nuevo registro en la tabla de usuarioLogistico con el clerk_user_id, nombre y email del usuario
 
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
