@@ -1,3 +1,5 @@
+// Renderiza componente de login de Clerk
+
 import { SignIn } from "@clerk/nextjs";
 
 export default function SignInPage() {
