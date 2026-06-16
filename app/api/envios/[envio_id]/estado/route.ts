@@ -96,7 +96,7 @@ export async function PATCH(
     try {
       const sellerRes = await fetch(sellerUrl, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.SHIPPING_API_KEY}` },
         body: JSON.stringify({
           estado_envio: ESTADO_MAP[nuevo_estado],
           envio_id: envio.envio_id,
@@ -117,7 +117,7 @@ export async function PATCH(
       try {
         const paymentsRes = await fetch(paymentsUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.SHIPPING_API_KEY}` },
           body: JSON.stringify({
             orden_id: envio.orden_id,
             envio_id: envio.envio_id,

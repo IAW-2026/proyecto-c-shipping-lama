@@ -3,10 +3,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
+/*
+function getApiKey(request: NextRequest) {
+  return request.headers.get('authorization')?.replace('Bearer ', '')
+}
+*/
+
+function getApiKey(request: NextRequest) {
+  const bearer = request.headers.get('authorization')?.replace('Bearer ', '')
+  return bearer ?? request.headers.get('x-api-key') ?? undefined
+}
+
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ orden_id: string }> }
 ) {
+  const key = getApiKey(request)
+  if (key !== process.env.SELLER_API_KEY && key !== process.env.BUYER_API_KEY) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  }
   try {
     const { orden_id } = await params
 
