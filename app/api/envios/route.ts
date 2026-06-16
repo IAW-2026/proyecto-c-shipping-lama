@@ -5,7 +5,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { calcularFechaEstimada } from '@/lib/calcularFechaEntrega'
 
+/*
+function getApiKey(request: NextRequest) {
+  return request.headers.get('authorization')?.replace('Bearer ', '')
+}
+*/
+
+function getApiKey(request: NextRequest) {
+  const bearer = request.headers.get('authorization')?.replace('Bearer ', '')
+  return bearer ?? request.headers.get('x-api-key') ?? undefined
+}
+
+
 export async function POST(request: NextRequest) {
+  if (getApiKey(request) !== process.env.SELLER_API_KEY) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  }
   try {
     const body = await request.json()
     const { orden_id, direccion_destino, vendedor_id } = body
@@ -51,6 +66,14 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  const key = getApiKey(request)
+  if (
+    key !== process.env.PAYMENTS_API_KEY &&
+    key !== process.env.CONTROL_PLANE_API_KEY &&
+    key !== process.env.ANALYTICS_API_KEY
+  ) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  }
   try {
     const { searchParams } = new URL(request.url)
 
