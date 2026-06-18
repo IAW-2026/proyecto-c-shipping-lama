@@ -20,7 +20,7 @@ export async function GET(
   { params }: { params: Promise<{ orden_id: string }> }
 ) {
   const key = getApiKey(request)
-  if (key !== process.env.SELLER_API_KEY && key !== process.env.BUYER_API_KEY && key !== process.env.CONTROL_PANEL_API_KEY) {
+  if (key !== process.env.SELLER_API_KEY && key !== process.env.BUYER_API_KEY && key !== process.env.CONTROL_PLANE_API_KEY) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
   try {
