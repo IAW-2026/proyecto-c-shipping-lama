@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model UsuarioLogistico {
+  logistico_id     String   @id @default(cuid())
+  clerk_user_id    String   @unique
+  nombre           String
+  email            String
+  empresa_logistica String
+  fecha_creacion   DateTime @default(now())
+
+  envios           Envio[]
+  eventos          HistorialEntrega[]
+}
+
+model Envio {
+  envio_id               String   @id @default(cuid())
+  orden_id               String
+  vendedor_id            String
+  estado_actual          String   @default("en_preparacion")
+  direccion_destino      String
+  codigo_seguimiento     String   @unique @default(cuid())
+  logistico_id           String?
+  fecha_creacion         DateTime @default(now())
+  fecha_estimada_entrega DateTime?
+  estado_liquidacion_logistico  String?   @default("pendiente")
+  fecha_liquidacion_logistico   DateTime? 
+  fecha_actualizacion           DateTime? @updatedAt
+
+  logistico              UsuarioLogistico? @relation(fields: [logistico_id], references: [logistico_id])
+  historial              HistorialEntrega[]
+}
+
+model HistorialEntrega {
+  evento_id    String   @id @default(cuid())
+  envio_id     String
+  estado       String
+  fecha        DateTime @default(now())
+  descripcion  String?
+  logistico_id String?
+
+  envio        Envio            @relation(fields: [envio_id], references: [envio_id])
+  logistico    UsuarioLogistico? @relation(fields: [logistico_id], references: [logistico_id])
+}
